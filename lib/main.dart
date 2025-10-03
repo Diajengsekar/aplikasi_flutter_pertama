@@ -51,16 +51,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  var selectedIndex = 0;     // ← Add this property.
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
         children: [
-          // 🧭 Navigation Rail (menu kiri)
           SafeArea(
             child: NavigationRail(
               extended: false,
-              destinations: const [
+              destinations: [
                 NavigationRailDestination(
                   icon: Icon(Icons.home),
                   label: Text('Home'),
@@ -70,14 +72,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: Text('Favorites'),
                 ),
               ],
-              selectedIndex: 0, // untuk sementara masih statis
+              selectedIndex: selectedIndex,    // ← Change to this.
               onDestinationSelected: (value) {
-                print('selected: $value'); // nanti diganti dengan navigasi
+
+                // ↓ Replace print with this.
+                setState(() {
+                  selectedIndex = value;
+                });
+
               },
             ),
           ),
-
-          // 🧱 Area konten utama
           Expanded(
             child: Container(
               color: Theme.of(context).colorScheme.primaryContainer,
@@ -89,6 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
 
 class GeneratorPage extends StatelessWidget {
   @override
